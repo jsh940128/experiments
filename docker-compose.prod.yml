@@ -20,6 +20,11 @@ services:
       - edge
     labels:
       caddy: experiments.seunghwanlabs.com
+      # Temporary: forward /resolve to the live Resolve subdomain until the Resolve cutover
+      # deploys the real app here. Ordered 1_ so it wins before the catch-all. Remove this
+      # (and the redirect will be replaced by oversight-api's own /resolve route) at cutover.
+      caddy.1_handle_path: /resolve*
+      caddy.1_handle_path.redir: https://resolve.seunghwanlabs.com{uri}
       # Catch-all root — ordered LAST (9_) so /resolve and /scope, declared on the app
       # containers, win the match first.
       caddy.9_handle: /*
