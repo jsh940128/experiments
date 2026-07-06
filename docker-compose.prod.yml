@@ -1,0 +1,30 @@
+# The experiments hub: a static index served by the box's shared caddy-docker-proxy at
+# experiments.seunghwanlabs.com/, with /resolve and /scope path-routed to their own service
+# containers (those routes are labels on the app services' own compose files). See DEPLOY.md.
+#
+#   docker network create edge   # one-time, box-wide — only if not already created
+#   docker compose -f docker-compose.prod.yml up -d
+#
+# Content is mounted read-only, so a `git pull` on the box updates the live site with no
+# rebuild — the container only exists to hand the files to the shared Caddy over the edge net.
+services:
+  hub:
+    image: caddy:2-alpine
+    container_name: experiments-hub
+    restart: unless-stopped
+    command: caddy file-server --root /srv --listen :80
+    volumes:
+      - ./public:/srv:ro
+    networks:
+      - edge
+    labels:
+      caddy: experiments.seunghwanlabs.com
+      # Catch-all root — ordered LAST (9_) so /resolve and /scope, declared on the app
+      # containers, win the match first.
+      caddy.9_handle: /*
+      caddy.9_handle.reverse_proxy: "{{upstreams 80}}"
+      caddy.encode: gzip
+
+networks:
+  edge:
+    external: true
