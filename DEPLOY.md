@@ -39,6 +39,7 @@ services:
     image: caddy:2-alpine
     container_name: experiments-hub
     restart: unless-stopped
+    entrypoint: caddy
     command: file-server --root /srv --listen :80
     volumes:
       - ./public:/srv:ro    # only the static files are served, not the repo root
