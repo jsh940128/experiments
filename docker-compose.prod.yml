@@ -12,7 +12,7 @@ services:
     image: caddy:2-alpine
     container_name: experiments-hub
     restart: unless-stopped
-    command: caddy file-server --root /srv --listen :80
+    command: file-server --root /srv --listen :80
     volumes:
       - ./public:/srv:ro
     networks:
