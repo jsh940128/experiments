@@ -6,9 +6,9 @@ each living at a path (`/resolve`, `/scope`, …) instead of its own subdomain. 
 experiment later is "a container + a label," never a new subdomain to provision.
 
 ```
- Cloudflare DNS · experiments  → A 3.36.255.77  (grey / DNS-only, Caddy does TLS)
+ Cloudflare DNS · experiments  → A <box-ip>  (grey / DNS-only, Caddy does TLS)
 
- AWS Lightsail 3.36.255.77 · shared caddy-docker-proxy (owns :80/:443)
+ AWS Lightsail <box-ip> · shared caddy-docker-proxy (owns :80/:443)
    experiments.seunghwanlabs.com
      /resolve/*  → oversight-api : 8000   (single-origin: Resolve SPA + API)
      /scope/*    → scope-api     : 8000   (single-origin: Scope UI + API)
@@ -23,7 +23,7 @@ its mount point. Symmetric, no CORS, and every future experiment follows the sam
 
 ## Step 1 — DNS
 
-Cloudflare DNS for `seunghwanlabs.com`: add **A `experiments` → `3.36.255.77`, DNS-only
+Cloudflare DNS for `seunghwanlabs.com`: add **A `experiments` → `<box-ip>`, DNS-only
 (grey cloud)** — same as the existing `api` / `scope` records — so the shared Caddy can
 complete its own ACME challenge and issue the cert.
 
