@@ -1,0 +1,8 @@
+# The hub is a tiny static site edited fairly often, so tell browsers to always revalidate
+# instead of serving a stale index.html from cache. Etag/Last-Modified still make that cheap
+# (a 304 when nothing changed); the point is an update shows up immediately, not eventually.
+:80 {
+	root * /srv
+	file_server
+	header Cache-Control "no-cache"
+}

@@ -13,9 +13,10 @@ services:
     container_name: experiments-hub
     restart: unless-stopped
     entrypoint: caddy
-    command: file-server --root /srv --listen :80
+    command: run --config /etc/caddy/Caddyfile --adapter caddyfile
     volumes:
       - ./public:/srv:ro
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
     networks:
       - edge
     labels:
