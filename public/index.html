@@ -123,10 +123,9 @@
       .exp-enter { font-size: 1.5rem; color: var(--muted-fg); flex-shrink: 0; transition: transform 0.35s, color 0.25s; }
       .exp:hover .exp-enter { color: var(--brand); transform: translateX(5px); }
 
-      .exp-soon { border-top: 1px dashed var(--border); cursor: default; opacity: 0.62; }
-      .exp-soon:hover { background: transparent; padding-left: 0.4rem; padding-right: 0.4rem; }
-      .exp-soon .exp-name, .exp-soon .exp-path { color: var(--muted-fg); }
-      .exp-soon .exp-tag { border-style: dashed; }
+      /* Heading above each group of entries */
+      .group { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brand); margin: 3.4rem 0 0.9rem; }
+      .group:first-child { margin-top: 0; }
 
       .footer { position: relative; z-index: 5; display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; align-items: baseline; justify-content: space-between; border-top: 1px solid var(--border); padding: 1.8rem 0 2.6rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-fg); }
       .footer a { color: var(--muted-fg); text-decoration: none; transition: color 0.2s; }
@@ -165,10 +164,12 @@
         <section class="hero">
           <p class="eyebrow rise" style="animation-delay:0.05s" data-en="Experiments" data-ko="실험 아카이브">Experiments</p>
           <h1 class="headline headline-face rise" style="animation-delay:0.12s" data-en="Field studies, and the tools behind them." data-ko="현장 연구, 그리고 그것을 뒷받침하는 도구들.">Field studies, and the tools behind them.</h1>
-          <p class="lede rise" style="animation-delay:0.2s" data-en="A working space for the experiments and research tools coming out of seunghwanlabs. Pick one to step inside." data-ko="seunghwanlabs에서 진행하는 실험과 연구 도구를 모아 둔 공간입니다. 하나를 골라 들어가 보세요.">A working space for the experiments and research tools coming out of seunghwanlabs. Pick one to step inside.</p>
+          <p class="lede rise" style="animation-delay:0.2s" data-en="A working space for the experiments, research tools, and hackathon projects coming out of seunghwanlabs. Pick one to step inside." data-ko="seunghwanlabs에서 만든 실험과 연구 도구, 해커톤 프로젝트를 모아 둔 공간입니다. 하나를 골라 들어가 보세요.">A working space for the experiments, research tools, and hackathon projects coming out of seunghwanlabs. Pick one to step inside.</p>
         </section>
 
         <section class="experiments" aria-label="Experiments">
+          <h2 class="group rise" style="animation-delay:0.26s" data-en="Experiments" data-ko="실험">Experiments</h2>
+
           <a class="exp rise" style="animation-delay:0.3s" href="/resolve/">
             <div class="exp-main">
               <div class="exp-head">
@@ -191,6 +192,21 @@
               <h2 class="exp-name headline-face">Scope</h2>
               <p class="exp-desc" data-en="A curated, searchable library of research papers. Filter by method and lens, keep notes, and export to your reference manager." data-ko="엄선한 연구 논문을 검색할 수 있는 라이브러리입니다. 방법론과 관점별로 필터링하고, 메모를 남기고, 참고문헌 관리 도구로 내보낼 수 있습니다.">A curated, searchable library of research papers. Filter by method and lens, keep notes, and export to your reference manager.</p>
               <p class="exp-meta" data-en="Search · BibTeX / RIS / CSV export" data-ko="검색 · BibTeX / RIS / CSV 내보내기">Search · BibTeX / RIS / CSV export</p>
+            </div>
+            <span class="exp-enter" aria-hidden="true">&#8594;</span>
+          </a>
+
+          <h2 class="group rise" style="animation-delay:0.46s" data-en="Hackathon" data-ko="해커톤">Hackathon</h2>
+
+          <a class="exp rise" style="animation-delay:0.5s" href="/frogs/">
+            <div class="exp-main">
+              <div class="exp-head">
+                <span class="exp-path">/frogs</span>
+                <span class="exp-tag" data-en="Platform concept" data-ko="플랫폼 기획">Platform concept</span>
+              </div>
+              <h2 class="exp-name headline-face" data-en="Frog in the Well" data-ko="우물 안 개구리">Frog in the Well</h2>
+              <p class="exp-desc" data-en="A remote internship and collaboration platform connecting young people in Korea's regions with companies and peers in the capital area. Work with the world beyond the well, without leaving it." data-ko="지역 청년과 수도권 기업·청년을 잇는 원격 인턴·협업 플랫폼입니다. 우물 밖으로 나가지 않고도, 우물 밖과 일합니다.">A remote internship and collaboration platform connecting young people in Korea's regions with companies and peers in the capital area. Work with the world beyond the well, without leaving it.</p>
+              <p class="exp-meta" data-en="Pitch page · Korean" data-ko="소개 페이지 · 한국어">Pitch page · Korean</p>
             </div>
             <span class="exp-enter" aria-hidden="true">&#8594;</span>
           </a>

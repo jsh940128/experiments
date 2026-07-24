@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>우물안의 개구리, 지역 청년과 수도권을 잇는 원격 인턴 · 협업 플랫폼</title>
+<meta name="description" content="우물 밖으로 나가지 않고도, 우물 밖과 일한다. 지역 청년과 수도권 기업·청년을 잇는 원격 인턴 프로젝트 플랫폼." />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        moss:  '#1B4332',
+        mid:   '#2D6A4F',
+        leaf:  '#52B788',
+        pale:  '#D8F3DC',
+        paper: '#F7FAF8',
+        amber: '#E9C46A',
+        // text-only shades of the same ramp: leaf on moss and moss on leaf
+        // both land at 4.48:1, just under AA, so small text uses these instead.
+        mint:  '#74C69D',
+        deep:  '#0F2B1E',
+      },
+      fontFamily: {
+        sans: ['"Pretendard Variable"', 'Pretendard', '"Noto Sans KR"', 'system-ui', 'sans-serif'],
+      },
+    },
+  },
+};
+</script>
+<style>
+  :root {
+    --moss: #1B4332;
+    --mid: #2D6A4F;
+    --leaf: #52B788;
+    --pale: #D8F3DC;
+    --paper: #F7FAF8;
+    --amber: #E9C46A;
+    --mint: #74C69D;
+    --deep: #0F2B1E;
+    --sky: #E9F5EC;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { word-break: keep-all; }
+  section[id], footer[id] { scroll-margin-top: 5rem; }
+
+  :focus-visible {
+    outline: 3px solid var(--leaf);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ============================================================
+     HERO SEQUENCE
+     Base styles below are the FINAL settled state. Keyframes
+     replay the journey; under prefers-reduced-motion every
+     animation is removed and the base (final) frame shows as-is.
+     ============================================================ */
+
+  .ease-water { animation-timing-function: cubic-bezier(.33, .75, .35, 1); }
+
+  /* --- Phase 1: the two wells (gone in the final frame) --- */
+  .well-panel { opacity: 0; }
+  .well-left  { animation: wellIn .9s cubic-bezier(.33,.75,.35,1) .2s both,
+                           wellOutL 1s cubic-bezier(.5,0,.65,1) 3.4s forwards; }
+  .well-right { animation: wellIn .9s cubic-bezier(.33,.75,.35,1) .38s both,
+                           wellOutR 1s cubic-bezier(.5,0,.65,1) 3.4s forwards; }
+  @keyframes wellIn  { from { opacity: 0; transform: translateY(16px); }
+                       to   { opacity: 1; transform: none; } }
+  @keyframes wellOutL { from { opacity: 1; transform: none; }
+                        to   { opacity: 0; transform: translate(-4%, 4%) scale(.95); } }
+  @keyframes wellOutR { from { opacity: 1; transform: none; }
+                        to   { opacity: 0; transform: translate(4%, 4%) scale(.95); } }
+
+  /* --- Phase 2: two lights rise and drift to center --- */
+  .hero-light {
+    position: absolute;
+    width: 12px; height: 12px;
+    margin: -6px 0 0 -6px;
+    border-radius: 9999px;
+    background: var(--leaf);
+    box-shadow: 0 0 18px 5px rgba(82, 183, 136, .5);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .light-a { --x0: 25%; --y0: 52%; --x1: 50%; --y1: 34%; }
+  .light-b { --x0: 75%; --y0: 52%; --x1: 50%; --y1: 34%; }
+  .light-a, .light-b {
+    animation: lightTravel 1.7s cubic-bezier(.4,.1,.3,1) 1.45s both,
+               lightVanish .3s linear 3.1s forwards;
+  }
+  @keyframes lightTravel {
+    0%   { left: var(--x0); top: var(--y0); opacity: 0; transform: scale(.5); }
+    18%  { opacity: 1; transform: scale(1); }
+    100% { left: var(--x1); top: var(--y1); opacity: 1; transform: scale(1);
+           background: var(--amber); box-shadow: 0 0 18px 5px rgba(233,196,106,.55); }
+  }
+  @keyframes lightVanish { to { opacity: 0; } }
+
+  /* --- Phase 3: the merge (one brighter point, then it descends) --- */
+  .light-merged {
+    position: absolute;
+    left: 50%; top: 34%;
+    width: 18px; height: 18px;
+    margin: -9px 0 0 -9px;
+    border-radius: 9999px;
+    background: var(--amber);
+    box-shadow: 0 0 26px 8px rgba(233, 196, 106, .55);
+    opacity: 0;
+    pointer-events: none;
+    --ym: 68%;
+    animation: mergePop .7s cubic-bezier(.33,.75,.35,1) 3.05s both,
+               mergeDescend 1s cubic-bezier(.45,.05,.35,1) 4.35s forwards,
+               mergeFade .45s linear 5.25s forwards;
+  }
+  @keyframes mergePop {
+    0%   { opacity: 0; transform: scale(.4); }
+    45%  { opacity: 1; transform: scale(1.45); }
+    100% { opacity: 1; transform: scale(1.05); }
+  }
+  @keyframes mergeDescend { to { top: var(--ym); } }
+  @keyframes mergeFade    { to { opacity: 0; } }
+
+  /* --- Phase 3b/4: walls fall away, one horizon fades in --- */
+  .scene-horizon { animation: horizonIn 1.1s cubic-bezier(.33,.75,.35,1) 3.55s both; }
+  @keyframes horizonIn { from { opacity: 0; transform: scale(.985); }
+                         to   { opacity: 1; transform: none; } }
+
+  .settle {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: frogSettle .9s cubic-bezier(.3,.7,.3,1.02) 4.45s both;
+  }
+  .settle-b { animation-delay: 4.6s; }
+  .settle-c { animation-delay: 4.85s; }
+  @keyframes frogSettle { from { opacity: 0; transform: translateY(-18px); }
+                          to   { opacity: 1; transform: none; } }
+
+  .ripple {
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    animation: rippleOut 1.3s ease-out 4.95s forwards;
+  }
+  .ripple-b { animation-delay: 5.1s; }
+  @keyframes rippleOut {
+    0%   { opacity: .5; transform: scale(.35); }
+    100% { opacity: 0; transform: scale(1); }
+  }
+
+  /* --- ambient after settling: water, not cartoon --- */
+  .bob {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: bob 5.5s ease-in-out 5.6s infinite alternate;
+  }
+  .bob-b { animation-delay: 6.4s; }
+  @keyframes bob { from { transform: translateY(0); } to { transform: translateY(3px); } }
+
+  .lamp { animation: lampPulse 3.2s ease-in-out 5.6s infinite alternate; }
+  @keyframes lampPulse { from { opacity: 1; } to { opacity: .65; } }
+
+  /* --- Phase 5: headline settles --- */
+  .hero-copy { animation: copyIn 1s cubic-bezier(.33,.75,.35,1) 5.35s both; }
+  @keyframes copyIn { from { opacity: 0; transform: translateY(18px); }
+                      to   { opacity: 1; transform: none; } }
+
+  /* Light path on stacked (mobile) hero */
+  @media (max-width: 767px) {
+    .light-a { --x0: 50%; --y0: 26%; --x1: 50%; --y1: 50%; }
+    .light-b { --x0: 50%; --y0: 76%; --x1: 50%; --y1: 50%; }
+    .light-merged { left: 50%; top: 50%; --ym: 66%; }
+  }
+
+  /* ============================================================
+     SCROLL REVEALS (enabled only when JS is present)
+     ============================================================ */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity .7s ease, transform .7s cubic-bezier(.22,.75,.35,1);
+  }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  /* ============================================================
+     HOW IT WORKS: progress line + hopping frog
+     ============================================================ */
+  #how { --p: 0; }
+  .how-fill-h { width: calc(var(--p, 0) * 100%); transition: width .35s ease-out; }
+  .how-fill-v { height: calc(var(--p, 0) * 100%); transition: height .35s ease-out; }
+  .how-frog-h { left: calc(var(--p, 0) * 100%); transition: left .35s ease-out; }
+  .how-frog-v { top: calc(var(--p, 0) * 100%); transition: top .35s ease-out; }
+  .how-frog-inner { display: block; }
+  .hop .how-frog-inner { animation: frogHop .55s cubic-bezier(.35,.6,.35,1); }
+  @keyframes frogHop {
+    0%   { transform: translateY(0); }
+    45%  { transform: translateY(-11px); }
+    100% { transform: translateY(0); }
+  }
+  .step .step-dot { transition: background-color .3s ease, border-color .3s ease, color .3s ease; }
+  .step.active .step-dot { background: var(--leaf); border-color: var(--leaf); color: var(--deep); }
+  /* dimming is JS-gated: without JS no step ever becomes .active */
+  .js .step .step-body { transition: opacity .4s ease; opacity: .45; }
+  .step.active .step-body { opacity: 1; }
+
+  /* ============================================================
+     CONNECTION MAP
+     ============================================================ */
+  .arc {
+    fill: none;
+    stroke: var(--leaf);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  /* the undrawn state is JS-gated: without JS the arcs are simply there */
+  .js .arc { stroke-dashoffset: 1; }
+  .map-in .arc { stroke-dashoffset: 0; transition: stroke-dashoffset 1.2s ease-out; }
+  .map-in .arc:nth-of-type(2) { transition-delay: .1s; }
+  .map-in .arc:nth-of-type(3) { transition-delay: .2s; }
+  .map-in .arc:nth-of-type(4) { transition-delay: .3s; }
+  .map-in .arc:nth-of-type(5) { transition-delay: .4s; }
+  .map-in .arc:nth-of-type(6) { transition-delay: .5s; }
+  .map-in .arc:nth-of-type(7) { transition-delay: .6s; }
+  .map-in .arc:nth-of-type(8) { transition-delay: .7s; }
+
+  .node-pulse {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: nodePulse 2.8s ease-out infinite;
+  }
+  @keyframes nodePulse {
+    0%   { opacity: .5; transform: scale(.6); }
+    70%  { opacity: 0;  transform: scale(1.9); }
+    100% { opacity: 0;  transform: scale(1.9); }
+  }
+  .map-node { cursor: pointer; }
+  .map-node:focus-visible { outline: 3px solid var(--leaf); outline-offset: 2px; }
+
+  #map-card {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -112%) scale(.97);
+    transition: opacity .2s ease, transform .2s ease, visibility .2s;
+  }
+  #map-card.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -112%) scale(1);
+  }
+  #map-card.below       { transform: translate(-50%, 12%) scale(.97); }
+  #map-card.below.show  { transform: translate(-50%, 12%) scale(1); }
+
+  /* ============================================================
+     REDUCED MOTION: serve the settled frame, no movement
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .well-panel, .hero-light, .light-merged, .scene-horizon, .settle,
+    .ripple, .bob, .lamp, .hero-copy, .node-pulse, .how-frog-inner,
+    .hop .how-frog-inner { animation: none !important; }
+    .scene-horizon, .settle, .hero-copy { opacity: 1; transform: none; }
+    .node-pulse { opacity: .25; transform: scale(1.4); }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+    .how-fill-h, .how-fill-v, .how-frog-h, .how-frog-v { transition: none; }
+    .map-in .arc { transition: none; }
+    .js .step .step-body, .step .step-dot { transition: none; }
+    #map-card { transition: none; }
+  }
+</style>
+</head>
+
+<body class="bg-paper font-sans text-moss antialiased">
+<script>document.documentElement.classList.add('js');</script>
+
+<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-moss focus:px-4 focus:py-2 focus:text-pale">본문으로 건너뛰기</a>
+
+<!-- ==================== SVG SPRITE ==================== -->
+<svg width="0" height="0" class="absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- frog at the bottom of a well, looking up. identical for both wells. -->
+    <g id="frog-up">
+      <ellipse cx="0" cy="10" rx="23" ry="16" fill="#52B788"/>
+      <ellipse cx="0" cy="16" rx="13" ry="8" fill="#D8F3DC"/>
+      <circle cx="-11" cy="-7" r="8" fill="#52B788"/>
+      <circle cx="11"  cy="-7" r="8" fill="#52B788"/>
+      <circle cx="-11" cy="-9" r="4" fill="#F7FAF8"/>
+      <circle cx="11"  cy="-9" r="4" fill="#F7FAF8"/>
+      <circle cx="-11" cy="-11" r="2" fill="#1B4332"/>
+      <circle cx="11"  cy="-11" r="2" fill="#1B4332"/>
+    </g>
+    <!-- frog facing outward, settled. identical for both frogs. -->
+    <g id="frog-front">
+      <ellipse cx="-16" cy="25" rx="8" ry="4" fill="#2D6A4F"/>
+      <ellipse cx="16"  cy="25" rx="8" ry="4" fill="#2D6A4F"/>
+      <ellipse cx="0" cy="8" rx="26" ry="19" fill="#52B788"/>
+      <ellipse cx="0" cy="15" rx="15" ry="10" fill="#D8F3DC"/>
+      <circle cx="-12" cy="-10" r="9" fill="#52B788"/>
+      <circle cx="12"  cy="-10" r="9" fill="#52B788"/>
+      <circle cx="-12" cy="-10" r="4.5" fill="#F7FAF8"/>
+      <circle cx="12"  cy="-10" r="4.5" fill="#F7FAF8"/>
+      <circle cx="-12" cy="-9" r="2.2" fill="#1B4332"/>
+      <circle cx="12"  cy="-9" r="2.2" fill="#1B4332"/>
+    </g>
+    <!-- lily pad: ellipse with a notch. --water is set where it's used. -->
+    <g id="lilypad">
+      <ellipse cx="0" cy="0" rx="58" ry="14" fill="#2D6A4F"/>
+      <path d="M 0 0 L 58 -6 L 58 6 Z" fill="var(--water, #1E4735)"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- ==================== NAV ==================== -->
+<header class="sticky top-0 z-40 border-b border-moss/10 bg-paper/90 backdrop-blur">
+  <nav aria-label="주 메뉴" class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+    <a href="#hero" class="flex items-center gap-2.5">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true" focusable="false">
+        <circle cx="15" cy="15" r="12.5" fill="none" stroke="#1B4332" stroke-width="2.5"/>
+        <circle cx="10.5" cy="10" r="3" fill="#52B788"/>
+        <circle cx="19.5" cy="10" r="3" fill="#52B788"/>
+      </svg>
+      <span class="text-[1.05rem] font-extrabold tracking-tight">우물안의 개구리</span>
+    </a>
+
+    <div class="hidden items-center gap-7 text-[.95rem] font-semibold text-moss/80 md:flex">
+      <a class="transition hover:text-moss" href="#how">서비스 소개</a>
+      <a class="transition hover:text-moss" href="#map">프로젝트</a>
+      <a class="transition hover:text-moss" href="#companies">기업</a>
+      <a class="transition hover:text-moss" href="#partners">기관 협력</a>
+      <button type="button" class="rounded-full bg-leaf px-5 py-2 font-bold text-deep transition hover:brightness-95">프로젝트 참여하기</button>
+    </div>
+
+    <button id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu"
+            class="rounded-lg p-2 text-moss md:hidden" aria-label="메뉴 열기">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"/>
+      </svg>
+    </button>
+  </nav>
+
+  <div id="nav-menu" class="hidden border-t border-moss/10 bg-paper px-4 pb-4 pt-2 md:hidden">
+    <a class="block rounded-lg px-3 py-2.5 font-semibold text-moss/85 hover:bg-pale/60" href="#how">서비스 소개</a>
+    <a class="block rounded-lg px-3 py-2.5 font-semibold text-moss/85 hover:bg-pale/60" href="#map">프로젝트</a>
+    <a class="block rounded-lg px-3 py-2.5 font-semibold text-moss/85 hover:bg-pale/60" href="#companies">기업</a>
+    <a class="block rounded-lg px-3 py-2.5 font-semibold text-moss/85 hover:bg-pale/60" href="#partners">기관 협력</a>
+    <button type="button" class="mt-2 w-full rounded-full bg-leaf px-4 py-2.5 font-bold text-deep">프로젝트 참여하기</button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ==================== HERO ==================== -->
+<section id="hero" class="relative overflow-hidden px-4 pb-16 pt-8 sm:px-6 md:pb-20 md:pt-12">
+  <div class="mx-auto max-w-6xl">
+
+    <!-- animation stage -->
+    <div class="hero-stage relative h-[580px] overflow-hidden rounded-[2rem] bg-[#EFF8F2] ring-1 ring-moss/10 md:h-[440px] md:rounded-[2.5rem]"
+         role="img"
+         aria-label="두 개의 우물, 조선소 크레인과 바다가 보이는 거제의 우물과 빌딩 숲의 서울의 우물에서 각각 빛이 떠올라 가운데에서 만나고, 우물 벽이 사라지며 두 개구리가 같은 지평선 위에서 함께 일하게 되는 애니메이션">
+
+      <!-- Phase 1: two wells, equal in every way -->
+      <div class="scene-wells absolute inset-0 flex flex-col md:flex-row" aria-hidden="true">
+        <div class="well-panel well-left flex h-1/2 w-full items-center justify-center md:h-full md:w-1/2">
+          <div class="flex flex-col items-center">
+            <svg class="h-[220px] w-[220px] md:h-[340px] md:w-[340px]" viewBox="0 0 400 400" focusable="false">
+              <defs><clipPath id="wellclipL"><circle cx="200" cy="200" r="185"/></clipPath></defs>
+              <g clip-path="url(#wellclipL)">
+                <rect width="400" height="400" fill="#E9F5EC"/>
+                <!-- sea -->
+                <rect x="0" y="150" width="400" height="50" fill="#BFE2CD"/>
+                <path d="M18 164 q9 -5 18 0 t18 0 t18 0 t18 0" fill="none" stroke="#74C69D" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+                <path d="M262 186 q9 -5 18 0 t18 0 t18 0 t18 0" fill="none" stroke="#74C69D" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+                <!-- ship -->
+                <g fill="#2D6A4F" opacity=".5">
+                  <path d="M268 160 h78 l-10 16 h-58 Z"/>
+                  <rect x="320" y="146" width="13" height="14"/>
+                </g>
+                <!-- gantry crane -->
+                <g fill="#2D6A4F" opacity=".55">
+                  <rect x="52" y="118" width="118" height="12"/>
+                  <rect x="62" y="128" width="11" height="72"/>
+                  <rect x="148" y="128" width="11" height="72"/>
+                  <rect x="92" y="128" width="15" height="9"/>
+                  <rect x="98" y="137" width="2.5" height="30"/>
+                  <rect x="93" y="167" width="12" height="9"/>
+                </g>
+                <!-- ground -->
+                <rect x="0" y="200" width="400" height="200" fill="#1B4332"/>
+                <!-- well shaft -->
+                <rect x="163" y="200" width="74" height="200" fill="#0F2B1E"/>
+                <polygon points="167,206 233,206 219,330 181,330" fill="#E9F5EC" opacity=".07"/>
+                <!-- the small circle of sky -->
+                <ellipse cx="200" cy="200" rx="37" ry="10" fill="#E9F5EC" stroke="#52B788" stroke-opacity=".4" stroke-width="2"/>
+                <use href="#frog-up" transform="translate(200 318)"/>
+              </g>
+              <circle cx="200" cy="200" r="185" fill="none" stroke="#2D6A4F" stroke-opacity=".18" stroke-width="2"/>
+            </svg>
+            <span class="mt-2 text-sm font-bold tracking-wide text-mid md:mt-3">거제</span>
+          </div>
+        </div>
+
+        <div class="well-panel well-right flex h-1/2 w-full items-center justify-center md:h-full md:w-1/2">
+          <div class="flex flex-col items-center">
+            <svg class="h-[220px] w-[220px] md:h-[340px] md:w-[340px]" viewBox="0 0 400 400" focusable="false">
+              <defs><clipPath id="wellclipR"><circle cx="200" cy="200" r="185"/></clipPath></defs>
+              <g clip-path="url(#wellclipR)">
+                <rect width="400" height="400" fill="#E9F5EC"/>
+                <!-- tower blocks -->
+                <g fill="#2D6A4F" opacity=".55">
+                  <rect x="42" y="112" width="30" height="88"/>
+                  <rect x="80" y="82" width="34" height="118"/>
+                  <rect x="96" y="64" width="2.5" height="18"/>
+                  <rect x="122" y="126" width="26" height="74"/>
+                  <rect x="255" y="96" width="32" height="104"/>
+                  <rect x="295" y="132" width="30" height="68"/>
+                  <rect x="333" y="112" width="24" height="88"/>
+                </g>
+                <g fill="#E9F5EC" opacity=".3">
+                  <rect x="87" y="94" width="6" height="8"/><rect x="101" y="94" width="6" height="8"/>
+                  <rect x="87" y="112" width="6" height="8"/><rect x="101" y="112" width="6" height="8"/>
+                  <rect x="87" y="130" width="6" height="8"/><rect x="101" y="130" width="6" height="8"/>
+                  <rect x="262" y="108" width="6" height="8"/><rect x="275" y="108" width="6" height="8"/>
+                  <rect x="262" y="126" width="6" height="8"/><rect x="275" y="126" width="6" height="8"/>
+                </g>
+                <!-- ground -->
+                <rect x="0" y="200" width="400" height="200" fill="#1B4332"/>
+                <!-- well shaft -->
+                <rect x="163" y="200" width="74" height="200" fill="#0F2B1E"/>
+                <polygon points="167,206 233,206 219,330 181,330" fill="#E9F5EC" opacity=".07"/>
+                <ellipse cx="200" cy="200" rx="37" ry="10" fill="#E9F5EC" stroke="#52B788" stroke-opacity=".4" stroke-width="2"/>
+                <use href="#frog-up" transform="translate(200 318)"/>
+              </g>
+              <circle cx="200" cy="200" r="185" fill="none" stroke="#2D6A4F" stroke-opacity=".18" stroke-width="2"/>
+            </svg>
+            <span class="mt-2 text-sm font-bold tracking-wide text-mid md:mt-3">서울</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 4: one horizon, two frogs, same plane, same scale -->
+      <div class="scene-horizon absolute inset-0" aria-hidden="true">
+
+        <!-- desktop composition -->
+        <svg class="hidden h-full w-full md:block" viewBox="0 0 1200 440" preserveAspectRatio="xMidYMid slice" focusable="false" style="--water:#1E4735">
+          <rect width="1200" height="440" fill="#E9F5EC"/>
+          <circle cx="600" cy="250" r="215" fill="none" stroke="#52B788" stroke-opacity=".14" stroke-width="2"/>
+          <!-- both origins stay on the horizon, same scale, same distance -->
+          <g fill="#2D6A4F" opacity=".26">
+            <rect x="88" y="212" width="64" height="7"/>
+            <rect x="94" y="219" width="6" height="41"/>
+            <rect x="140" y="219" width="6" height="41"/>
+            <rect x="112" y="219" width="9" height="5"/>
+            <rect x="186" y="228" width="34" height="32"/>
+            <rect x="228" y="214" width="26" height="46"/>
+          </g>
+          <g fill="#2D6A4F" opacity=".26">
+            <rect x="952" y="214" width="26" height="46"/>
+            <rect x="986" y="200" width="30" height="60"/>
+            <rect x="1024" y="226" width="24" height="34"/>
+            <rect x="1056" y="210" width="26" height="50"/>
+          </g>
+          <!-- ground + water -->
+          <rect y="260" width="1200" height="180" fill="#1B4332"/>
+          <ellipse cx="600" cy="345" rx="440" ry="72" fill="#1E4735"/>
+          <ellipse cx="600" cy="345" rx="330" ry="52" fill="none" stroke="#52B788" stroke-opacity=".12" stroke-width="2"/>
+          <ellipse cx="600" cy="345" rx="200" ry="32" fill="none" stroke="#52B788" stroke-opacity=".1" stroke-width="2"/>
+
+          <ellipse class="ripple" cx="470" cy="352" rx="86" ry="20" fill="none" stroke="#D8F3DC" stroke-width="2"/>
+          <ellipse class="ripple ripple-b" cx="730" cy="352" rx="86" ry="20" fill="none" stroke="#D8F3DC" stroke-width="2"/>
+
+          <!-- shared workspace between them -->
+          <g class="bob">
+            <g class="settle settle-c">
+              <ellipse cx="600" cy="352" rx="60" ry="14" fill="#2D6A4F"/>
+              <rect x="596" y="316" width="8" height="34" rx="3" fill="#2D6A4F"/>
+              <rect x="556" y="308" width="88" height="9" rx="4.5" fill="#D8F3DC"/>
+              <g class="lamp">
+                <circle cx="600" cy="290" r="11" fill="#E9C46A" fill-opacity=".28"/>
+                <circle cx="600" cy="290" r="5.5" fill="#E9C46A"/>
+              </g>
+            </g>
+          </g>
+
+          <!-- two frogs: identical geometry, identical scale, same baseline -->
+          <g class="bob">
+            <g class="settle">
+              <use href="#lilypad" transform="translate(470 352)"/>
+              <use href="#frog-front" transform="translate(470 322)"/>
+            </g>
+          </g>
+          <g class="bob bob-b">
+            <g class="settle settle-b">
+              <use href="#lilypad" transform="translate(730 352) scale(-1 1)"/>
+              <use href="#frog-front" transform="translate(730 322)"/>
+            </g>
+          </g>
+        </svg>
+
+        <!-- stacked (mobile) composition -->
+        <svg class="block h-full w-full md:hidden" viewBox="0 0 375 580" preserveAspectRatio="xMidYMid slice" focusable="false" style="--water:#1E4735">
+          <rect width="375" height="580" fill="#E9F5EC"/>
+          <circle cx="187" cy="300" r="150" fill="none" stroke="#52B788" stroke-opacity=".14" stroke-width="2"/>
+          <g fill="#2D6A4F" opacity=".26">
+            <rect x="26" y="306" width="42" height="5"/>
+            <rect x="30" y="311" width="4" height="29"/>
+            <rect x="60" y="311" width="4" height="29"/>
+            <rect x="82" y="318" width="20" height="22"/>
+          </g>
+          <g fill="#2D6A4F" opacity=".26">
+            <rect x="282" y="312" width="18" height="28"/>
+            <rect x="306" y="300" width="20" height="40"/>
+            <rect x="332" y="318" width="16" height="22"/>
+          </g>
+          <rect y="340" width="375" height="240" fill="#1B4332"/>
+          <ellipse cx="187" cy="432" rx="205" ry="58" fill="#1E4735"/>
+          <ellipse cx="187" cy="432" rx="140" ry="38" fill="none" stroke="#52B788" stroke-opacity=".12" stroke-width="2"/>
+
+          <ellipse class="ripple" cx="102" cy="438" rx="62" ry="15" fill="none" stroke="#D8F3DC" stroke-width="2"/>
+          <ellipse class="ripple ripple-b" cx="272" cy="438" rx="62" ry="15" fill="none" stroke="#D8F3DC" stroke-width="2"/>
+
+          <g class="bob">
+            <g class="settle settle-c">
+              <ellipse cx="187" cy="440" rx="42" ry="10" fill="#2D6A4F"/>
+              <rect x="184" y="412" width="6" height="26" rx="2.5" fill="#2D6A4F"/>
+              <rect x="156" y="405" width="62" height="7" rx="3.5" fill="#D8F3DC"/>
+              <g class="lamp">
+                <circle cx="187" cy="386" r="9" fill="#E9C46A" fill-opacity=".28"/>
+                <circle cx="187" cy="386" r="4.5" fill="#E9C46A"/>
+              </g>
+            </g>
+          </g>
+
+          <g class="bob">
+            <g class="settle">
+              <use href="#lilypad" transform="translate(102 438) scale(.78)"/>
+              <use href="#frog-front" transform="translate(102 415) scale(.85)"/>
+            </g>
+          </g>
+          <g class="bob bob-b">
+            <g class="settle settle-b">
+              <use href="#lilypad" transform="translate(272 438) scale(-.78 .78)"/>
+              <use href="#frog-front" transform="translate(272 415) scale(.85)"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Phase 2 and 3: the signals -->
+      <div class="hero-light light-a" aria-hidden="true"></div>
+      <div class="hero-light light-b" aria-hidden="true"></div>
+      <div class="light-merged" aria-hidden="true"></div>
+    </div>
+
+    <!-- Phase 5: headline -->
+    <div class="hero-copy mx-auto mt-10 max-w-3xl text-center md:mt-12">
+      <h1 class="text-[1.85rem] font-extrabold leading-[1.22] tracking-tight text-moss sm:text-4xl md:text-5xl md:leading-[1.18]">
+        우물 밖으로 나가지 않고도,<br />우물 밖과 일한다
+      </h1>
+      <p class="mt-4 text-base font-medium text-moss/75 sm:mt-5 sm:text-lg">
+        지역 청년과 수도권을 잇는 원격 인턴 · 협업 플랫폼
+      </p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+        <button type="button" class="w-full rounded-full bg-leaf px-7 py-3.5 text-[1.02rem] font-bold text-deep transition hover:brightness-95 sm:w-auto">
+          청년으로 참여
+        </button>
+        <button type="button" class="w-full rounded-full border-2 border-mid px-7 py-3.5 text-[1.02rem] font-bold text-mid transition hover:bg-pale/50 sm:w-auto">
+          기업으로 과제 등록
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== THE GAP ==================== -->
+<section id="gap" class="bg-moss px-4 py-20 text-pale sm:px-6 md:py-28">
+  <div class="mx-auto max-w-6xl">
+    <div class="reveal max-w-2xl">
+      <p class="text-xs font-bold uppercase tracking-[0.22em] text-mint">The Gap</p>
+      <h2 class="mt-3 text-3xl font-extrabold leading-tight md:text-4xl">격차는 감정이 아니라,<br class="sm:hidden" /> 숫자입니다</h2>
+      <p class="mt-4 text-base leading-relaxed text-pale/70 md:text-lg">
+        거제든 강릉이든 제주든, 숫자는 크게 다르지 않습니다.
+        거제에 사는 컴퓨터공학과 3학년의 하루를 옮기면 이렇습니다.
+      </p>
+    </div>
+
+    <div class="mt-14 grid gap-12 sm:grid-cols-3 sm:gap-8 md:mt-16">
+      <div class="reveal">
+        <p class="text-sm font-semibold text-pale/70">편도 교통비</p>
+        <p class="mt-2 text-5xl font-extrabold tabular-nums tracking-tight md:text-6xl">
+          <span data-counter data-from="0" data-to="9000">9,000</span><span class="ml-1 text-2xl font-bold text-mint md:text-3xl">원</span>
+        </p>
+        <p class="mt-3 max-w-[26ch] text-[.95rem] leading-relaxed text-pale/70">프로그램이 있는 가장 가까운 도시까지, 버스 한 번 값</p>
+      </div>
+      <div class="reveal">
+        <p class="text-sm font-semibold text-pale/70">이동 시간</p>
+        <p class="mt-2 text-5xl font-extrabold tabular-nums tracking-tight md:text-6xl">
+          <span class="align-baseline">왕복 </span><span data-counter data-from="0" data-to="3">3</span><span>~4</span><span class="ml-1 text-2xl font-bold text-mint md:text-3xl">시간</span>
+        </p>
+        <p class="mt-3 max-w-[26ch] text-[.95rem] leading-relaxed text-pale/70">특강 하나, 스터디 하나를 위해 길에서 보내는 시간</p>
+      </div>
+      <div class="reveal">
+        <p class="text-sm font-semibold text-pale/70">지역 내 경력 기회</p>
+        <p class="mt-2 text-5xl font-extrabold tabular-nums tracking-tight md:text-6xl">
+          <span data-counter data-from="12" data-to="0">0</span><span class="ml-1 text-2xl font-bold text-mint md:text-3xl">곳</span>
+        </p>
+        <p class="mt-3 max-w-[26ch] text-[.95rem] leading-relaxed text-pale/70">이력서에 쓸 경험을 만들 수 있는 곳</p>
+      </div>
+    </div>
+
+    <p class="reveal mt-14 max-w-2xl text-base leading-relaxed text-pale/80 md:mt-16 md:text-lg">
+      이 숫자들은 바꾸기 어렵습니다. 그래서 우리는 인프라를 짓는 대신,
+      <span class="font-bold text-mint">거리를 지우는 쪽</span>을 택했습니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== HOW IT WORKS ==================== -->
+<section id="how" class="px-4 py-20 sm:px-6 md:py-28">
+  <div class="mx-auto max-w-6xl">
+    <div class="reveal max-w-2xl">
+      <p class="text-xs font-bold uppercase tracking-[0.22em] text-mid">How It Works</p>
+      <h2 class="mt-3 text-3xl font-extrabold leading-tight text-moss md:text-4xl">우물 안에서,<br class="sm:hidden" /> 우물 밖과 일하는 법</h2>
+      <p class="mt-4 text-base leading-relaxed text-moss/75 md:text-lg">
+        등록부터 보수 지급까지 전 과정이 원격입니다. 필요한 것은 노트북과 4~8주뿐입니다.
+      </p>
+    </div>
+
+    <!-- desktop: horizontal track / mobile: vertical rail -->
+    <div class="relative mt-14 md:mt-20">
+
+      <!-- horizontal track (md+) -->
+      <div class="absolute left-[12.5%] right-[12.5%] top-[22px] hidden h-[3px] rounded-full bg-pale md:block" aria-hidden="true">
+        <div class="how-fill-h h-full rounded-full bg-leaf"></div>
+        <div class="how-frog how-frog-h absolute top-[-6px] -translate-x-1/2 -translate-y-full">
+          <span class="how-frog-inner">
+            <svg width="30" height="28" viewBox="-30 -24 60 54" aria-hidden="true" focusable="false"><use href="#frog-front"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- vertical rail (mobile) -->
+      <div class="absolute bottom-2 left-[21px] top-2 w-[3px] rounded-full bg-pale md:hidden" aria-hidden="true">
+        <div class="how-fill-v w-full rounded-full bg-leaf"></div>
+        <div class="how-frog how-frog-v absolute left-[-13px] -translate-y-1/2">
+          <span class="how-frog-inner">
+            <svg width="28" height="26" viewBox="-30 -24 60 54" aria-hidden="true" focusable="false"><use href="#frog-front"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <ol class="relative grid gap-10 md:grid-cols-4 md:gap-6">
+        <li class="step relative pl-14 md:pl-0 md:text-center">
+          <span class="step-dot absolute left-0 top-0 flex h-11 w-11 items-center justify-center rounded-full border-2 border-mid bg-paper text-[1.05rem] font-extrabold text-mid md:static md:mx-auto md:flex">1</span>
+          <div class="step-body md:mt-5">
+            <h3 class="text-lg font-bold text-moss">프로필 등록</h3>
+            <p class="mt-2 text-[.95rem] leading-relaxed text-moss/75">전공, 기술, 가능한 시간을 등록합니다. 지역은 조건이 아니라 정보입니다.</p>
+          </div>
+        </li>
+        <li class="step relative pl-14 md:pl-0 md:text-center">
+          <span class="step-dot absolute left-0 top-0 flex h-11 w-11 items-center justify-center rounded-full border-2 border-mid bg-paper text-[1.05rem] font-extrabold text-mid md:static md:mx-auto md:flex">2</span>
+          <div class="step-body md:mt-5">
+            <h3 class="text-lg font-bold text-moss">팀 매칭</h3>
+            <p class="mt-2 text-[.95rem] leading-relaxed text-moss/75">모든 팀은 지역 + 수도권 혼합으로 구성됩니다. 선택이 아니라 원칙이고, 예외는 없습니다.</p>
+            <span class="mt-3 inline-block rounded-full bg-pale px-3 py-1 text-xs font-bold text-mid">혼합 팀 원칙</span>
+          </div>
+        </li>
+        <li class="step relative pl-14 md:pl-0 md:text-center">
+          <span class="step-dot absolute left-0 top-0 flex h-11 w-11 items-center justify-center rounded-full border-2 border-mid bg-paper text-[1.05rem] font-extrabold text-mid md:static md:mx-auto md:flex">3</span>
+          <div class="step-body md:mt-5">
+            <h3 class="text-lg font-bold text-moss">원격 프로젝트 수행</h3>
+            <p class="mt-2 text-[.95rem] leading-relaxed text-moss/75">실제 기업 과제를 4~8주간 원격으로 수행합니다. 주간 체크인과 멘토링이 포함됩니다.</p>
+          </div>
+        </li>
+        <li class="step relative pl-14 md:pl-0 md:text-center">
+          <span class="step-dot absolute left-0 top-0 flex h-11 w-11 items-center justify-center rounded-full border-2 border-mid bg-paper text-[1.05rem] font-extrabold text-mid md:static md:mx-auto md:flex">4</span>
+          <div class="step-body md:mt-5">
+            <h3 class="text-lg font-bold text-moss">포트폴리오 · 보수 지급</h3>
+            <p class="mt-2 text-[.95rem] leading-relaxed text-moss/75">완료된 프로젝트는 검증된 포트폴리오가 되고, 보수는 계좌로 지급됩니다.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONNECTION MAP ==================== -->
+<section id="map" class="bg-pale/40 px-4 py-20 sm:px-6 md:py-28">
+  <div class="mx-auto max-w-6xl">
+    <div class="grid items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+
+      <div class="reveal">
+        <p class="text-xs font-bold uppercase tracking-[0.22em] text-mid">Connection Map</p>
+        <h2 class="mt-3 text-3xl font-extrabold leading-tight text-moss md:text-4xl">선 하나가,<br /> 팀 하나입니다</h2>
+        <p class="mt-4 text-base leading-relaxed text-moss/75 md:text-lg">
+          지도 위의 모든 선은 실제로 결성된 혼합 팀입니다.
+          거제의 개구리와 서울의 개구리는 서로에게 필요한 팀원이었을 뿐,
+          어느 쪽도 구조되지 않았습니다.
+        </p>
+        <p class="mt-4 text-base leading-relaxed text-moss/75 md:text-lg">
+          노드에 마우스를 올리거나 키보드로 선택하면 그 지역 참여자를 볼 수 있습니다.
+        </p>
+        <p class="mt-6 text-sm text-moss/75">표시된 프로필은 서비스 소개용 예시입니다.</p>
+      </div>
+
+      <div class="reveal">
+        <div class="map-wrap relative mx-auto max-w-md" id="map-wrap">
+          <!-- role="group", not "img": role="img" would make the focusable
+               city nodes inside presentational and strip their labels. -->
+          <svg viewBox="0 0 420 560" class="w-full" role="group" aria-label="대한민국 지도 위에 서울, 강릉, 대전, 전주, 광주, 포항, 부산, 거제, 제주 노드가 표시되고 그 사이에 팀을 뜻하는 선이 그려진 연결 지도" focusable="false">
+            <!-- stylized Korea -->
+            <path d="M118 106
+                     Q140 88 168 84 Q210 78 244 70 Q256 72 258 84
+                     Q268 104 272 128 Q280 168 288 200 Q298 244 306 282
+                     Q314 310 310 330 Q306 348 300 360
+                     Q288 372 272 376 Q240 384 214 378
+                     Q188 390 160 388 Q130 392 106 384
+                     Q92 372 94 352 Q98 324 92 300 Q84 274 90 250
+                     Q96 224 88 202 Q82 178 96 158 Q108 140 104 122 Q108 110 118 106 Z"
+                  fill="#EAF5EE" stroke="#74C69D" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true"/>
+            <!-- Geoje island -->
+            <ellipse cx="262" cy="404" rx="13" ry="10" fill="#EAF5EE" stroke="#74C69D" stroke-width="2.5" aria-hidden="true"/>
+            <!-- Jeju -->
+            <ellipse cx="122" cy="508" rx="30" ry="13" fill="#EAF5EE" stroke="#74C69D" stroke-width="2.5" aria-hidden="true"/>
+
+            <!-- arcs: each one a formed team, each with a 수도권 member -->
+            <g aria-hidden="true">
+              <path class="arc" pathLength="1" d="M262 400 Q320 240 146 126"/>
+              <path class="arc" pathLength="1" d="M294 356 Q340 200 150 122"/>
+              <path class="arc" pathLength="1" d="M136 344 Q56 220 140 128"/>
+              <path class="arc" pathLength="1" d="M178 240 Q126 186 144 130"/>
+              <path class="arc" pathLength="1" d="M254 168 Q200 192 148 126"/>
+              <path class="arc" pathLength="1" d="M150 298 Q104 212 140 130"/>
+              <path class="arc" pathLength="1" d="M288 306 Q302 198 150 124"/>
+              <path class="arc" pathLength="1" d="M122 500 Q38 300 140 128"/>
+            </g>
+
+            <!-- nodes: identical size everywhere -->
+            <g id="map-nodes">
+              <g class="map-node" tabindex="0" role="button"
+                 data-card="서울 · 산업디자인 4학년 · 프로젝트 3건 완료"
+                 aria-label="서울 노드: 산업디자인 4학년, 프로젝트 3건 완료">
+                <circle class="node-pulse" cx="144" cy="122" r="10" fill="none" stroke="#52B788" stroke-width="2"/>
+                <circle cx="144" cy="122" r="6" fill="#52B788" stroke="#F7FAF8" stroke-width="2"/>
+                <text x="160" y="118" font-size="15" font-weight="700" fill="#1B4332">서울</text>
+              </g>
+              <g class="map-node" tabindex="0" role="button"
+                 data-card="강릉 · 관광경영 2학년 · 프로젝트 1건 완료"
+                 aria-label="강릉 노드: 관광경영 2학년, 프로젝트 1건 완료">
+                <circle class="node-pulse" cx="256" cy="168" r="10" fill="none" stroke="#52B788" stroke-width="2"/>
+                <circle cx="256" cy="168" r="6" fill="#52B788" stroke="#F7FAF8" stroke-width="2"/>
+                <text x="272" y="164" font-size="15" font-weight="700" fill="#1B4332">강릉</text>
+              </g>
+              <g class="map-node" tabindex="0" role="button"
+                 data-card="대전 · 화학공학 3학년 · 프로젝트 2건 완료"
+                 aria-label="대전 노드: 화학공학 3학년, 프로젝트 2건 완료">
+                <circle class="node-pulse" cx="178" cy="242" r="10" fill="none" stroke="#52B788" stroke-width="2"/>
+                <circle cx="178" cy="242" r="6" fill="#52B788" stroke="#F7FAF8" stroke-width="2"/>
+                <text x="194" y="247" font-size="15" font-weight="700" fill="#1B4332">대전</text>
+              </g>
+              <g class="map-node" tabindex="0" role="button"
+                 data-card="전주 · 사회복지학 4학년 · 프로젝트 2건 완료"
+                 aria-label="전주 노드: 사회복지학 4학년, 프로젝트 2건 완료">
+                <circle class="node-pulse" cx="150" cy="300" r="10" fill="none" stroke="#52B788" stroke-width="2"/>
+                <circle cx="150" cy="300" r="6" fill="#52B788" stroke="#F7FAF8" stroke-width="2"/>
+                <text x="166" y="296" font-size="15" font-weight="700" fill="#1B4332">전주</text>
+              </g>
+              <g class="map-node" tabindex="0" role="button"
+                 data-card="광주 · 미디어커뮤니케이션 2학년 · 프로젝트 1건 완료"
+                 aria-label="광주 노드: 미디어커뮤니케이션 2학년, 프로젝트 1건 완료">
+                <circle class="node-pulse" cx="136" cy="346" r="10" fill="none" stroke="#52B788" stroke-width="2"/>
+                <circle cx="136" cy="346" r="6" fill="#52B788" stroke="#F7FAF8" stroke-width="2"/>
+                <text x="90" y="351" font-size="15" font-weight="700" fill="#1B4332">광주</text>
+              </g>
+              <g class="map-node" tabindex="0" role="button"
+                 data-card="포항 · 신소재공학 4학년 · 프로젝트 2건 완료"
+                 aria-label="포항 노드: 신소재공학 4학년, 프로젝트 2건 완료">
+                <circle class="node-pulse" cx="288" cy="308" r="10" fill="none" stroke="#52B788" stroke-width="2"/>
+                <circle cx="288" cy="308" r="6" fill="#52B788" stroke="#F7FAF8" stroke-width="2"/>
+                <text x="304" y="304" font-size="15" font-weight="700" fill="#1B4332">포항</text>
+              </g>
+              <g class="map-node" tabindex="0" role="button"
+                 data-card="부산 · 시각디자인 4학년 · 프로젝트 3건 완료"
+                 aria-label="부산 노드: 시각디자인 4학년, 프로젝트 3건 완료">
+                <circle class="node-pulse" cx="296" cy="358" r="10" fill="none" stroke="#52B788" stroke-width="2"/>
+                <circle cx="296" cy="358" r="6" fill="#52B788" stroke="#F7FAF8" stroke-width="2"/>
+                <text x="312" y="352" font-size="15" font-weight="700" fill="#1B4332">부산</text>
+              </g>
+              <g class="map-node" tabindex="0" role="button"
+                 data-card="거제 · 컴퓨터공학 3학년 · 프로젝트 2건 완료"
+                 aria-label="거제 노드: 컴퓨터공학 3학년, 프로젝트 2건 완료">
+                <circle class="node-pulse" cx="262" cy="404" r="10" fill="none" stroke="#52B788" stroke-width="2"/>
+                <circle cx="262" cy="404" r="6" fill="#52B788" stroke="#F7FAF8" stroke-width="2"/>
+                <text x="228" y="428" font-size="15" font-weight="700" fill="#1B4332">거제</text>
+              </g>
+              <g class="map-node" tabindex="0" role="button"
+                 data-card="제주 · 식품영양학 3학년 · 프로젝트 1건 완료"
+                 aria-label="제주 노드: 식품영양학 3학년, 프로젝트 1건 완료">
+                <circle class="node-pulse" cx="122" cy="508" r="10" fill="none" stroke="#52B788" stroke-width="2"/>
+                <circle cx="122" cy="508" r="6" fill="#52B788" stroke="#F7FAF8" stroke-width="2"/>
+                <text x="160" y="513" font-size="15" font-weight="700" fill="#1B4332">제주</text>
+              </g>
+            </g>
+          </svg>
+
+          <div id="map-card" aria-hidden="true"
+               class="pointer-events-none absolute left-1/2 top-0 z-10 w-max max-w-[calc(100%-1rem)] rounded-xl border border-moss/10 bg-paper px-4 py-2.5 text-center text-sm font-semibold text-moss shadow-lg shadow-moss/10"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOR COMPANIES ==================== -->
+<section id="companies" class="border-y border-moss/10 bg-white px-4 py-20 sm:px-6 md:py-28">
+  <div class="mx-auto max-w-6xl">
+    <div class="reveal max-w-2xl">
+      <p class="text-xs font-bold uppercase tracking-[0.22em] text-moss/75">For Companies</p>
+      <h2 class="mt-3 text-3xl font-extrabold leading-tight text-moss md:text-4xl">채용 전에, 일로 검증하세요</h2>
+      <p class="mt-4 text-base leading-relaxed text-moss/75 md:text-lg">
+        이력서 대신 4~8주의 실제 결과물을 봅니다. 고용 계약 없이 과제 단위로 시작합니다.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-px overflow-hidden rounded-2xl border border-moss/10 bg-moss/10 sm:grid-cols-3">
+      <div class="reveal bg-white p-7 md:p-8">
+        <p class="text-sm font-bold uppercase tracking-wider text-mid">01</p>
+        <h3 class="mt-3 text-lg font-bold text-moss">프로젝트 단위 검증</h3>
+        <p class="mt-2.5 text-[.95rem] leading-relaxed text-moss/75">이력서 한 줄이 아니라 4~8주의 결과물과 협업 기록으로 판단합니다.</p>
+      </div>
+      <div class="reveal bg-white p-7 md:p-8">
+        <p class="text-sm font-bold uppercase tracking-wider text-mid">02</p>
+        <h3 class="mt-3 text-lg font-bold text-moss">계약 부담 없음</h3>
+        <p class="mt-2.5 text-[.95rem] leading-relaxed text-moss/75">고용이 아니라 과제로 시작합니다. 채용 전환은 언제나 열려 있습니다.</p>
+      </div>
+      <div class="reveal bg-white p-7 md:p-8">
+        <p class="text-sm font-bold uppercase tracking-wider text-mid">03</p>
+        <h3 class="mt-3 text-lg font-bold text-moss">더 넓은 인재풀</h3>
+        <p class="mt-2.5 text-[.95rem] leading-relaxed text-moss/75">수도권 공고에 닿지 않던 전국의 인재를 프로젝트로 만납니다.</p>
+      </div>
+    </div>
+
+    <div class="reveal mt-8 flex flex-col justify-between gap-6 rounded-2xl border border-moss/10 bg-paper p-7 sm:flex-row sm:items-center md:p-8">
+      <div>
+        <p class="text-sm font-bold text-moss/75">매칭 수수료</p>
+        <p class="mt-1.5 text-2xl font-extrabold text-moss md:text-3xl">과제 보수의 15~20%</p>
+        <p class="mt-2 text-[.95rem] text-moss/75">과제가 완료된 경우에만 청구됩니다. 그 외 비용은 없습니다.</p>
+      </div>
+      <button type="button" class="shrink-0 rounded-full border-2 border-moss px-6 py-3 font-bold text-moss transition hover:bg-moss hover:text-pale">
+        기업으로 과제 등록
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PARTNERS ==================== -->
+<section id="partners" class="bg-pale/50 px-4 py-14 sm:px-6 md:py-16">
+  <div class="reveal mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+    <div class="max-w-2xl">
+      <p class="text-xs font-bold uppercase tracking-[0.22em] text-mid">Partnership</p>
+      <h2 class="mt-2 text-2xl font-extrabold text-moss md:text-[1.65rem]">지자체 · 대학과 함께합니다</h2>
+      <p class="mt-3 text-[.98rem] leading-relaxed text-moss/75">
+        청년 유출을 고민하는 지자체, 취업 연계를 고민하는 대학과 프로그램을 공동 운영합니다.
+        참여 이력과 지역 정착 데이터로 성과를 증명합니다.
+      </p>
+    </div>
+    <button type="button" class="shrink-0 rounded-full bg-mid px-6 py-3 font-bold text-pale transition hover:bg-moss">협력 문의</button>
+  </div>
+</section>
+
+<!-- ==================== VOICES ==================== -->
+<section id="voices" class="px-4 py-20 sm:px-6 md:py-28">
+  <div class="mx-auto max-w-6xl">
+    <div class="reveal max-w-2xl">
+      <p class="text-xs font-bold uppercase tracking-[0.22em] text-mid">Voices</p>
+      <h2 class="mt-3 text-3xl font-extrabold leading-tight text-moss md:text-4xl">먼저 연결된 사람들</h2>
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      <figure class="reveal flex flex-col justify-between rounded-2xl border border-moss/10 bg-white p-7">
+        <blockquote class="text-[1.02rem] leading-relaxed text-moss/85">
+          “두 번째 프로젝트를 끝내고 나서, 같이 일했던 회사에서 면접을 보자는 연락이 왔어요.
+          아직 결과는 몰라요. 그래도 거제에서 지원서만 쓰던 작년과는 출발선이 달라요.”
+        </blockquote>
+        <figcaption class="mt-6 flex items-center gap-3.5">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-pale font-extrabold text-mid" aria-hidden="true">김</span>
+          <div>
+            <p class="font-bold text-moss">김지현 <span class="font-semibold text-moss/75">· 거제 · 컴퓨터공학 3학년</span></p>
+            <p class="mt-0.5 text-sm text-moss/75">프로젝트 2건 완료 · 면접 1회</p>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="reveal flex flex-col justify-between rounded-2xl border border-moss/10 bg-white p-7">
+        <blockquote class="text-[1.02rem] leading-relaxed text-moss/85">
+          “지역 축제 방문객 데이터를 정리하는 과제였어요. 서울 팀원과 새벽까지
+          화면 공유를 붙잡고 있던 날이 제일 기억에 남아요.
+          프로젝트는 끝났는데, 우리는 아직 매주 통화해요.”
+        </blockquote>
+        <figcaption class="mt-6 flex items-center gap-3.5">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-pale font-extrabold text-mid" aria-hidden="true">정</span>
+          <div>
+            <p class="font-bold text-moss">정다은 <span class="font-semibold text-moss/75">· 강릉 · 관광경영 4학년</span></p>
+            <p class="mt-0.5 text-sm text-moss/75">프로젝트 2건 완료 · 졸업 예정</p>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="reveal flex flex-col justify-between rounded-2xl border border-moss/10 bg-white p-7">
+        <blockquote class="text-[1.02rem] leading-relaxed text-moss/85">
+          “과제가 조선소 현장에서 쓰는 앱이었어요. 거제 팀원이 현장을 아니까
+          저희가 짜둔 화면 절반이 쓸모없다는 게 첫 주에 나왔고요.
+          서울에서만 회의했으면 그대로 제출했을 거예요.”
+        </blockquote>
+        <figcaption class="mt-6 flex items-center gap-3.5">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-pale font-extrabold text-mid" aria-hidden="true">이</span>
+          <div>
+            <p class="font-bold text-moss">이준호 <span class="font-semibold text-moss/75">· 서울 · 경영학 4학년</span></p>
+            <p class="mt-0.5 text-sm text-moss/75">프로젝트 2건 완료 · 혼합 팀 2회</p>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CLOSING CTA ==================== -->
+<section id="closing" class="relative overflow-hidden bg-moss px-4 py-24 text-center sm:px-6 md:py-32">
+  <!-- the well, seen from inside: concentric circles of sky -->
+  <svg class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" width="720" height="720" viewBox="0 0 720 720" aria-hidden="true" focusable="false">
+    <circle cx="360" cy="360" r="130" fill="none" stroke="#52B788" stroke-opacity=".22" stroke-width="2"/>
+    <circle cx="360" cy="360" r="210" fill="none" stroke="#52B788" stroke-opacity=".14" stroke-width="2"/>
+    <circle cx="360" cy="360" r="290" fill="none" stroke="#52B788" stroke-opacity=".08" stroke-width="2"/>
+    <circle cx="360" cy="360" r="350" fill="none" stroke="#52B788" stroke-opacity=".05" stroke-width="2"/>
+  </svg>
+
+  <div class="reveal relative mx-auto max-w-2xl">
+    <h2 class="text-3xl font-extrabold leading-tight text-pale md:text-5xl md:leading-[1.2]">당신의 우물은<br class="sm:hidden" /> 어디입니까?</h2>
+    <p class="mt-5 text-lg font-medium text-pale/65 md:text-xl">어디든, 연결은 가능합니다.</p>
+    <button type="button" class="mt-10 rounded-full bg-leaf px-9 py-4 text-lg font-bold text-deep transition hover:brightness-95">
+      프로젝트 참여하기
+    </button>
+  </div>
+</section>
+
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-[#122E22] px-4 py-12 text-pale/70 sm:px-6">
+  <div class="mx-auto max-w-6xl">
+    <div class="flex flex-col justify-between gap-8 md:flex-row md:items-end">
+      <div>
+        <div class="flex items-center gap-2.5">
+          <svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true" focusable="false">
+            <circle cx="15" cy="15" r="12.5" fill="none" stroke="#D8F3DC" stroke-width="2.5"/>
+            <circle cx="10.5" cy="10" r="3" fill="#52B788"/>
+            <circle cx="19.5" cy="10" r="3" fill="#52B788"/>
+          </svg>
+          <span class="text-base font-extrabold text-pale">우물안의 개구리</span>
+        </div>
+        <p class="mt-3 max-w-sm text-sm leading-relaxed">지역 청년과 수도권을 잇는 원격 인턴 · 협업 플랫폼</p>
+      </div>
+      <div class="text-sm md:text-right">
+        <p class="font-semibold text-pale/80">박성미 · 박수현 · 진승환</p>
+        <p class="mt-1.5">© 2026 우물안의 개구리. 본 페이지는 서비스 소개용 목업입니다.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== SCRIPT ==================== -->
+<script>
+(function () {
+  'use strict';
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- mobile nav ---------- */
+  var navToggle = document.getElementById('nav-toggle');
+  var navMenu = document.getElementById('nav-menu');
+  if (navToggle && navMenu) {
+    function setMenuOpen(open) {
+      navMenu.classList.toggle('hidden', !open);
+      navToggle.setAttribute('aria-expanded', String(open));
+      navToggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+    }
+    navToggle.addEventListener('click', function () {
+      setMenuOpen(navMenu.classList.contains('hidden'));
+    });
+    navMenu.addEventListener('click', function (e) {
+      if (e.target.closest('a')) setMenuOpen(false);
+    });
+  }
+
+  /* ---------- scroll reveals ---------- */
+  var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var revealIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          revealIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
+    reveals.forEach(function (el) { revealIO.observe(el); });
+  }
+
+  /* ---------- counters ---------- */
+  var counters = Array.prototype.slice.call(document.querySelectorAll('[data-counter]'));
+  function formatNum(n) { return Math.round(n).toLocaleString('ko-KR'); }
+  function runCounter(el) {
+    var from = parseFloat(el.getAttribute('data-from') || '0');
+    var to = parseFloat(el.getAttribute('data-to') || '0');
+    var dur = 1400;
+    var t0 = null;
+    function frame(t) {
+      if (t0 === null) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var e = 1 - Math.pow(1 - p, 3); // easeOutCubic
+      el.textContent = formatNum(from + (to - from) * e);
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    counters.forEach(function (el) { el.textContent = formatNum(parseFloat(el.getAttribute('data-to') || '0')); });
+  } else {
+    var countIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          runCounter(entry.target);
+          countIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(function (el) { countIO.observe(el); });
+  }
+
+  /* ---------- how-it-works progress frog ---------- */
+  var how = document.getElementById('how');
+  if (how) {
+    var steps = Array.prototype.slice.call(how.querySelectorAll('.step'));
+    var frogWraps = Array.prototype.slice.call(how.querySelectorAll('.how-frog'));
+    var thresholds = [0.04, 0.32, 0.62, 0.9];
+    var lastActive = -1;
+
+    function setProgress(p) {
+      how.style.setProperty('--p', String(p));
+      var active = -1;
+      steps.forEach(function (s, i) {
+        var on = p >= thresholds[i];
+        s.classList.toggle('active', on);
+        if (on) active = i;
+      });
+      if (active > lastActive && !reduceMotion) {
+        frogWraps.forEach(function (w) {
+          w.classList.remove('hop');
+          void w.offsetWidth; // restart the hop animation
+          w.classList.add('hop');
+        });
+      }
+      lastActive = active;
+    }
+
+    if (reduceMotion) {
+      setProgress(1);
+    } else {
+      var ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          ticking = false;
+          var r = how.getBoundingClientRect();
+          var vh = window.innerHeight;
+          var p = (vh * 0.85 - r.top) / r.height;
+          setProgress(Math.max(0, Math.min(1, p)));
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      onScroll();
+    }
+  }
+
+  /* ---------- connection map ---------- */
+  var mapSection = document.getElementById('map');
+  if (mapSection) {
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      mapSection.classList.add('map-in');
+    } else {
+      var mapIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            mapSection.classList.add('map-in');
+            mapIO.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      mapIO.observe(mapSection.querySelector('.map-wrap') || mapSection);
+    }
+  }
+
+  var mapWrap = document.getElementById('map-wrap');
+  var mapCard = document.getElementById('map-card');
+  if (mapWrap && mapCard) {
+    var nodes = Array.prototype.slice.call(mapWrap.querySelectorAll('.map-node'));
+    function showCard(node) {
+      var dot = node.querySelector('circle:not(.node-pulse)');
+      var wrapRect = mapWrap.getBoundingClientRect();
+      var dotRect = dot.getBoundingClientRect();
+      var x = dotRect.left + dotRect.width / 2 - wrapRect.left;
+      var y = dotRect.top - wrapRect.top;
+
+      // measure after setting the text: the card is visibility-hidden, so it
+      // still has a layout box, and its width varies with the label length
+      mapCard.textContent = node.getAttribute('data-card') || '';
+      var half = Math.min(mapCard.offsetWidth / 2 || 105, wrapRect.width / 2);
+      x = Math.max(half, Math.min(wrapRect.width - half, x));
+
+      // flip below the node when there is no room above it
+      var below = y - mapCard.offsetHeight * 1.12 < 0;
+      mapCard.classList.toggle('below', below);
+
+      mapCard.style.left = x + 'px';
+      mapCard.style.top = (below ? y + dotRect.height : y) + 'px';
+      mapCard.classList.add('show');
+    }
+    function hideCard() { mapCard.classList.remove('show'); }
+    nodes.forEach(function (node) {
+      node.addEventListener('mouseenter', function () { showCard(node); });
+      node.addEventListener('mouseleave', hideCard);
+      node.addEventListener('focus', function () { showCard(node); });
+      node.addEventListener('blur', hideCard);
+      node.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') hideCard();
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showCard(node); }
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>
