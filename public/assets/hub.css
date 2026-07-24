@@ -86,6 +86,10 @@ body {
 .headline { font-size: clamp(2.1rem, 5.5vw, 3.5rem); line-height: 1.08; text-wrap: balance; max-width: 20ch; color: var(--fg); }
 .lede { color: var(--muted-fg); margin-top: 1.5rem; max-width: 46ch; font-size: 1.08rem; line-height: 1.65; }
 
+/* Korean breaks at any character by default, which splits words like 그것을 across lines.
+   keep-all confines breaks to spaces; it is a no-op for the English copy. */
+.headline, .lede, .exp-name, .exp-desc { word-break: keep-all; }
+
 .experiments { position: relative; z-index: 5; padding-bottom: 3rem; }
 .exp {
   display: flex; align-items: center; gap: 1.5rem;
