@@ -1,0 +1,122 @@
+/* Shared chrome for the hub pages (/ and /hackathon/). Kept in one file so the two
+   indexes can't drift apart visually; project pages under them stay self-contained. */
+:root {
+  --bg: hsl(40 30% 97%);
+  --fg: hsl(30 16% 9%);
+  --card: hsl(42 38% 98%);
+  --muted: hsl(38 22% 92%);
+  --muted-fg: hsl(32 8% 42%);
+  --border: hsl(34 17% 85%);
+  --brand: hsl(231 76% 52%);
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Inter", "Noto Sans KR", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+:root[data-theme="dark"] {
+  --bg: hsl(30 14% 7%);
+  --fg: hsl(38 24% 90%);
+  --card: hsl(30 12% 10%);
+  --muted: hsl(32 10% 15%);
+  --muted-fg: hsl(36 11% 58%);
+  --border: hsl(33 10% 18%);
+  --brand: hsl(230 92% 68%);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+::selection { background: hsl(var(--brand) / 0.2); }
+
+.grain {
+  position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+.wrap { max-width: 62rem; margin: 0 auto; padding: 0 1.5rem; }
+@media (min-width: 720px) { .wrap { padding: 0 2.5rem; } }
+
+.headline-face {
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 40;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.topbar {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; padding: 1.6rem 0;
+}
+.wordmark { font-family: var(--serif); font-weight: 500; font-size: 1.15rem; letter-spacing: -0.01em; color: var(--fg); text-decoration: none; display: inline-flex; align-items: baseline; gap: 0.55rem; }
+.wordmark .labs { color: var(--muted-fg); }
+.wordmark .slash { font-family: var(--mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: var(--brand); align-self: center; }
+
+.controls { display: flex; align-items: center; gap: 0.6rem; }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; background: var(--card); }
+.seg button { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; padding: 0.4rem 0.7rem; border: 0; background: transparent; color: var(--muted-fg); cursor: pointer; transition: color 0.2s, background 0.2s; }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.icon-btn { display: inline-grid; place-items: center; width: 2rem; height: 2rem; border: 1px solid var(--border); border-radius: 999px; background: var(--card); color: var(--muted-fg); cursor: pointer; transition: color 0.2s, border-color 0.2s; }
+.icon-btn:hover { color: var(--fg); border-color: var(--muted-fg); }
+.icon-btn svg { width: 15px; height: 15px; }
+:root[data-theme="dark"] .icon-btn .i-sun { display: block; }
+:root[data-theme="dark"] .icon-btn .i-moon { display: none; }
+.icon-btn .i-sun { display: none; }
+.icon-btn .i-moon { display: block; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 4px; }
+
+.hero { position: relative; z-index: 5; padding: 3.5rem 0 2.5rem; }
+@media (min-width: 720px) { .hero { padding: 5.5rem 0 3.5rem; } }
+.hero::before {
+  content: ""; position: absolute; z-index: -1; top: -14rem; left: 8%; width: 34rem; height: 34rem;
+  background: radial-gradient(closest-side, hsl(231 76% 52% / 0.13), transparent 70%);
+  pointer-events: none;
+}
+.eyebrow { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brand); margin-bottom: 1.4rem; }
+.headline { font-size: clamp(2.1rem, 5.5vw, 3.5rem); line-height: 1.08; text-wrap: balance; max-width: 20ch; color: var(--fg); }
+.lede { color: var(--muted-fg); margin-top: 1.5rem; max-width: 46ch; font-size: 1.08rem; line-height: 1.65; }
+
+.experiments { position: relative; z-index: 5; padding-bottom: 3rem; }
+.exp {
+  display: flex; align-items: center; gap: 1.5rem;
+  padding: 2.1rem 0.4rem; border-top: 1px solid var(--border);
+  text-decoration: none; color: inherit; cursor: pointer;
+  transition: background 0.35s, padding 0.35s;
+}
+.exp:hover { background: hsl(var(--brand) / 0.04); padding-left: 1rem; padding-right: 1rem; }
+.exp-main { flex: 1; min-width: 0; }
+.exp-head { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.7rem; flex-wrap: wrap; }
+.exp-path { font-family: var(--mono); font-size: 0.8rem; color: var(--brand); }
+.exp-tag { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-fg); border: 1px solid var(--border); border-radius: 999px; padding: 0.18rem 0.6rem; }
+.exp-tag.active { color: var(--brand); border-color: hsl(var(--brand) / 0.4); }
+.exp-name { font-size: clamp(1.5rem, 3.4vw, 1.95rem); margin-bottom: 0.6rem; transition: color 0.25s; }
+.exp:hover .exp-name { color: var(--brand); }
+.exp-desc { color: var(--muted-fg); margin-bottom: 0.7rem; max-width: 56ch; line-height: 1.6; font-size: 0.98rem; }
+.exp-meta { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; color: var(--muted-fg); }
+.exp-enter { font-size: 1.5rem; color: var(--muted-fg); flex-shrink: 0; transition: transform 0.35s, color 0.25s; }
+.exp:hover .exp-enter { color: var(--brand); transform: translateX(5px); }
+
+/* Heading above each group of entries */
+.group { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brand); margin: 3.4rem 0 0.9rem; }
+.group:first-child { margin-top: 0; }
+
+.footer { position: relative; z-index: 5; display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; align-items: baseline; justify-content: space-between; border-top: 1px solid var(--border); padding: 1.8rem 0 2.6rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-fg); }
+.footer a { color: var(--muted-fg); text-decoration: none; transition: color 0.2s; }
+.footer a:hover { color: var(--brand); }
+
+.rise { opacity: 0; transform: translateY(14px); animation: rise 0.7s cubic-bezier(0.22,1,0.36,1) forwards; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: none; opacity: 1; transform: none; }
+  .exp, .exp-name, .exp-enter { transition: none; }
+}

@@ -16,128 +16,7 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <style>
-      :root {
-        --bg: hsl(40 30% 97%);
-        --fg: hsl(30 16% 9%);
-        --card: hsl(42 38% 98%);
-        --muted: hsl(38 22% 92%);
-        --muted-fg: hsl(32 8% 42%);
-        --border: hsl(34 17% 85%);
-        --brand: hsl(231 76% 52%);
-        --serif: "Fraunces", Georgia, serif;
-        --sans: "Inter", "Noto Sans KR", system-ui, sans-serif;
-        --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
-      }
-      :root[data-theme="dark"] {
-        --bg: hsl(30 14% 7%);
-        --fg: hsl(38 24% 90%);
-        --card: hsl(30 12% 10%);
-        --muted: hsl(32 10% 15%);
-        --muted-fg: hsl(36 11% 58%);
-        --border: hsl(33 10% 18%);
-        --brand: hsl(230 92% 68%);
-      }
-
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-      html { scroll-behavior: smooth; }
-      body {
-        background: var(--bg);
-        color: var(--fg);
-        font-family: var(--sans);
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
-        min-height: 100vh;
-        position: relative;
-        overflow-x: hidden;
-      }
-      ::selection { background: hsl(var(--brand) / 0.2); }
-
-      .grain {
-        position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: 0.04;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        background-size: 180px 180px;
-      }
-
-      .wrap { max-width: 62rem; margin: 0 auto; padding: 0 1.5rem; }
-      @media (min-width: 720px) { .wrap { padding: 0 2.5rem; } }
-
-      .headline-face {
-        font-family: var(--serif);
-        font-optical-sizing: auto;
-        font-variation-settings: "opsz" 40;
-        font-weight: 600;
-        letter-spacing: -0.02em;
-      }
-
-      .topbar {
-        position: relative; z-index: 10;
-        display: flex; align-items: center; justify-content: space-between;
-        gap: 1rem; padding: 1.6rem 0;
-      }
-      .wordmark { font-family: var(--serif); font-weight: 500; font-size: 1.15rem; letter-spacing: -0.01em; color: var(--fg); text-decoration: none; display: inline-flex; align-items: baseline; gap: 0.55rem; }
-      .wordmark .labs { color: var(--muted-fg); }
-      .wordmark .slash { font-family: var(--mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: var(--brand); align-self: center; }
-
-      .controls { display: flex; align-items: center; gap: 0.6rem; }
-      .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; background: var(--card); }
-      .seg button { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; padding: 0.4rem 0.7rem; border: 0; background: transparent; color: var(--muted-fg); cursor: pointer; transition: color 0.2s, background 0.2s; }
-      .seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
-      .icon-btn { display: inline-grid; place-items: center; width: 2rem; height: 2rem; border: 1px solid var(--border); border-radius: 999px; background: var(--card); color: var(--muted-fg); cursor: pointer; transition: color 0.2s, border-color 0.2s; }
-      .icon-btn:hover { color: var(--fg); border-color: var(--muted-fg); }
-      .icon-btn svg { width: 15px; height: 15px; }
-      :root[data-theme="dark"] .icon-btn .i-sun { display: block; }
-      :root[data-theme="dark"] .icon-btn .i-moon { display: none; }
-      .icon-btn .i-sun { display: none; }
-      .icon-btn .i-moon { display: block; }
-      :focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 4px; }
-
-      .hero { position: relative; z-index: 5; padding: 3.5rem 0 2.5rem; }
-      @media (min-width: 720px) { .hero { padding: 5.5rem 0 3.5rem; } }
-      .hero::before {
-        content: ""; position: absolute; z-index: -1; top: -14rem; left: 8%; width: 34rem; height: 34rem;
-        background: radial-gradient(closest-side, hsl(231 76% 52% / 0.13), transparent 70%);
-        pointer-events: none;
-      }
-      .eyebrow { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brand); margin-bottom: 1.4rem; }
-      .headline { font-size: clamp(2.1rem, 5.5vw, 3.5rem); line-height: 1.08; text-wrap: balance; max-width: 20ch; color: var(--fg); }
-      .lede { color: var(--muted-fg); margin-top: 1.5rem; max-width: 46ch; font-size: 1.08rem; line-height: 1.65; }
-
-      .experiments { position: relative; z-index: 5; padding-bottom: 3rem; }
-      .exp {
-        display: flex; align-items: center; gap: 1.5rem;
-        padding: 2.1rem 0.4rem; border-top: 1px solid var(--border);
-        text-decoration: none; color: inherit; cursor: pointer;
-        transition: background 0.35s, padding 0.35s;
-      }
-      .exp:hover { background: hsl(var(--brand) / 0.04); padding-left: 1rem; padding-right: 1rem; }
-      .exp-main { flex: 1; min-width: 0; }
-      .exp-head { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.7rem; flex-wrap: wrap; }
-      .exp-path { font-family: var(--mono); font-size: 0.8rem; color: var(--brand); }
-      .exp-tag { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-fg); border: 1px solid var(--border); border-radius: 999px; padding: 0.18rem 0.6rem; }
-      .exp-tag.active { color: var(--brand); border-color: hsl(var(--brand) / 0.4); }
-      .exp-name { font-size: clamp(1.5rem, 3.4vw, 1.95rem); margin-bottom: 0.6rem; transition: color 0.25s; }
-      .exp:hover .exp-name { color: var(--brand); }
-      .exp-desc { color: var(--muted-fg); margin-bottom: 0.7rem; max-width: 56ch; line-height: 1.6; font-size: 0.98rem; }
-      .exp-meta { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; color: var(--muted-fg); }
-      .exp-enter { font-size: 1.5rem; color: var(--muted-fg); flex-shrink: 0; transition: transform 0.35s, color 0.25s; }
-      .exp:hover .exp-enter { color: var(--brand); transform: translateX(5px); }
-
-      /* Heading above each group of entries */
-      .group { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brand); margin: 3.4rem 0 0.9rem; }
-      .group:first-child { margin-top: 0; }
-
-      .footer { position: relative; z-index: 5; display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; align-items: baseline; justify-content: space-between; border-top: 1px solid var(--border); padding: 1.8rem 0 2.6rem; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-fg); }
-      .footer a { color: var(--muted-fg); text-decoration: none; transition: color 0.2s; }
-      .footer a:hover { color: var(--brand); }
-
-      .rise { opacity: 0; transform: translateY(14px); animation: rise 0.7s cubic-bezier(0.22,1,0.36,1) forwards; }
-      @keyframes rise { to { opacity: 1; transform: none; } }
-      @media (prefers-reduced-motion: reduce) {
-        .rise { animation: none; opacity: 1; transform: none; }
-        .exp, .exp-name, .exp-enter { transition: none; }
-      }
-    </style>
+    <link rel="stylesheet" href="/assets/hub.css" />
   </head>
   <body>
     <div class="grain" aria-hidden="true"></div>
@@ -164,7 +43,7 @@
         <section class="hero">
           <p class="eyebrow rise" style="animation-delay:0.05s" data-en="Experiments" data-ko="실험 아카이브">Experiments</p>
           <h1 class="headline headline-face rise" style="animation-delay:0.12s" data-en="Field studies, and the tools behind them." data-ko="현장 연구, 그리고 그것을 뒷받침하는 도구들.">Field studies, and the tools behind them.</h1>
-          <p class="lede rise" style="animation-delay:0.2s" data-en="A working space for the experiments, research tools, and hackathon projects coming out of seunghwanlabs. Pick one to step inside." data-ko="seunghwanlabs에서 만든 실험과 연구 도구, 해커톤 프로젝트를 모아 둔 공간입니다. 하나를 골라 들어가 보세요.">A working space for the experiments, research tools, and hackathon projects coming out of seunghwanlabs. Pick one to step inside.</p>
+          <p class="lede rise" style="animation-delay:0.2s" data-en="A working space for the experiments and research tools coming out of seunghwanlabs. Pick one to step inside." data-ko="seunghwanlabs에서 만든 실험과 연구 도구를 모아 둔 공간입니다. 하나를 골라 들어가 보세요.">A working space for the experiments and research tools coming out of seunghwanlabs. Pick one to step inside.</p>
         </section>
 
         <section class="experiments" aria-label="Experiments">
@@ -195,18 +74,21 @@
             </div>
             <span class="exp-enter" aria-hidden="true">&#8594;</span>
           </a>
+        </section>
 
-          <h2 class="group rise" style="animation-delay:0.46s" data-en="Hackathon" data-ko="해커톤">Hackathon</h2>
+        <!-- The hackathon work is its own track, not an experiment, so it gets its own index
+             at /hackathon/ and only a door from here. The projects are listed there, once. -->
+        <section class="experiments" aria-label="Hackathon">
+          <h2 class="group rise" style="animation-delay:0.46s" data-en="Elsewhere" data-ko="다른 작업">Elsewhere</h2>
 
-          <a class="exp rise" style="animation-delay:0.5s" href="/hackathon/frogs/">
+          <a class="exp rise" style="animation-delay:0.5s" href="/hackathon/">
             <div class="exp-main">
               <div class="exp-head">
-                <span class="exp-path">/hackathon/frogs</span>
-                <span class="exp-tag" data-en="Platform concept" data-ko="플랫폼 기획">Platform concept</span>
+                <span class="exp-path">/hackathon</span>
+                <span class="exp-tag" data-en="Collection" data-ko="모음">Collection</span>
               </div>
-              <h2 class="exp-name headline-face" data-en="Frog in the Well" data-ko="우물 안 개구리">Frog in the Well</h2>
-              <p class="exp-desc" data-en="A remote internship and collaboration platform connecting young people in Korea's regions with companies and peers in the capital area. Work with the world beyond the well, without leaving it." data-ko="지역 청년과 수도권 기업·청년을 잇는 원격 인턴·협업 플랫폼입니다. 우물 밖으로 나가지 않고도, 우물 밖과 일합니다.">A remote internship and collaboration platform connecting young people in Korea's regions with companies and peers in the capital area. Work with the world beyond the well, without leaving it.</p>
-              <p class="exp-meta" data-en="Pitch page · Korean" data-ko="소개 페이지 · 한국어">Pitch page · Korean</p>
+              <h2 class="exp-name headline-face" data-en="Hackathon" data-ko="해커톤">Hackathon</h2>
+              <p class="exp-desc" data-en="Concepts built at hackathons, taken far enough that you can look at one and judge it for yourself." data-ko="해커톤에서 만든 기획들입니다. 직접 보고 판단할 수 있을 만큼 구체화했습니다.">Concepts built at hackathons, taken far enough that you can look at one and judge it for yourself.</p>
             </div>
             <span class="exp-enter" aria-hidden="true">&#8594;</span>
           </a>
@@ -220,35 +102,6 @@
       </footer>
     </div>
 
-    <script>
-      (function () {
-        var root = document.documentElement;
-        try {
-          var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-          root.setAttribute("data-theme", prefersDark ? "dark" : "light");
-        } catch (e) { root.setAttribute("data-theme", "light"); }
-
-        document.getElementById("theme").addEventListener("click", function () {
-          root.setAttribute("data-theme", root.getAttribute("data-theme") === "dark" ? "light" : "dark");
-        });
-
-        var nodes = document.querySelectorAll("[data-en]");
-        var buttons = document.querySelectorAll(".seg button");
-        function setLang(lang) {
-          nodes.forEach(function (n) {
-            var v = n.getAttribute("data-" + lang);
-            if (v !== null) n.textContent = v;
-          });
-          root.setAttribute("lang", lang);
-          buttons.forEach(function (b) {
-            b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang));
-          });
-        }
-        buttons.forEach(function (b) {
-          b.addEventListener("click", function () { setLang(b.getAttribute("data-lang")); });
-        });
-        setLang("ko");
-      })();
-    </script>
+    <script src="/assets/hub.js"></script>
   </body>
 </html>
