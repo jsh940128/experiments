@@ -3,6 +3,10 @@
 # (a 304 when nothing changed); the point is an update shows up immediately, not eventually.
 :80 {
 	root * /srv
+	# /hackathon is a namespace holding the projects, not a page of its own, so send a bare
+	# visit back to the index that lists them rather than 404ing.
+	redir /hackathon /
+	redir /hackathon/ /
 	file_server
 	header Cache-Control "no-cache"
 }
