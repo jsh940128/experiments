@@ -3,116 +3,117 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>experiments · seunghwanlabs</title>
-    <meta name="description" content="Field studies and research tools from seunghwanlabs." />
+    <title>리서치 · seunghwanlabs</title>
+    <meta name="description" content="Field studies and experiments on how people decide in automated settings, and the tools behind them. Seung Hwan Jin, seunghwanlabs." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta property="og:title" content="experiments · seunghwanlabs" />
-    <meta property="og:description" content="Field studies and research tools from seunghwanlabs." />
+    <meta property="og:title" content="리서치 · seunghwanlabs" />
+    <meta property="og:description" content="Field studies and experiments on how people decide in automated settings." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://experiments.seunghwanlabs.com" />
+    <meta name="theme-color" content="#f6f2ea" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#16130f" media="(prefers-color-scheme: dark)" />
+    <script>
+      try { document.documentElement.setAttribute("data-theme", matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"); } catch (e) {}
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/assets/hub.css" />
   </head>
   <body>
-    <div class="grain" aria-hidden="true"></div>
-
     <div class="wrap">
-      <header class="topbar rise">
+      <header class="topbar">
         <a class="wordmark" href="https://seunghwanlabs.com">
-          <span>seunghwan<span class="labs">labs</span></span>
-          <span class="slash">/ experiments</span>
+          <span class="name">seunghwan</span><span class="labs">labs</span>
+          <span class="where" data-en="/ Research" data-ko="/ 리서치">/ 리서치</span>
         </a>
         <div class="controls">
-          <div class="seg" role="group" aria-label="Language">
-            <button type="button" data-lang="en">EN</button>
-            <button type="button" data-lang="ko">KO</button>
-          </div>
-          <button type="button" class="icon-btn" id="theme" aria-label="Toggle light or dark theme">
-            <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <button type="button" id="lang" aria-label="Switch to English">EN</button>
+          <button type="button" id="theme" aria-label="Toggle light or dark theme">
+            <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
           </button>
         </div>
       </header>
 
-      <main>
-        <section class="hero">
-          <p class="eyebrow rise" style="animation-delay:0.05s" data-en="Experiments" data-ko="실험 아카이브">Experiments</p>
-          <h1 class="headline headline-face rise" style="animation-delay:0.12s" data-en="Field studies, and the tools behind them." data-ko="현장 연구, 그리고 그것을 뒷받침하는 도구들.">Field studies, and the tools behind them.</h1>
-          <p class="lede rise" style="animation-delay:0.2s" data-en="A working space for the experiments and research tools coming out of seunghwanlabs. Pick one to step inside." data-ko="seunghwanlabs에서 만든 실험과 연구 도구를 모아 둔 공간입니다. 하나를 골라 들어가 보세요.">A working space for the experiments and research tools coming out of seunghwanlabs. Pick one to step inside.</p>
+      <section class="intro">
+        <p class="hello" data-en="Research" data-ko="리서치">리서치</p>
+        <h1 class="headline" data-en="How do people decide when the work is automated?" data-ko="자동화된 환경에서 사람은 어떻게 판단할까요?">자동화된 환경에서 사람은 어떻게 판단할까요?</h1>
+        <p class="lede" data-en="These are the experiments and tools behind that question. Anyone can try them; sessions started from this page are never counted in the study data." data-ko="그 질문을 다루는 실험과 연구 도구를 모아 두었습니다. 누구나 직접 해 볼 수 있으며, 이 페이지에서 시작한 참여는 연구 데이터에 포함되지 않습니다.">그 질문을 다루는 실험과 연구 도구를 모아 두었습니다. 누구나 직접 해 볼 수 있으며, 이 페이지에서 시작한 참여는 연구 데이터에 포함되지 않습니다.</p>
+      </section>
+
+      <main style="margin-top: 3.5rem">
+        <section aria-labelledby="g-exp">
+          <h2 class="section-label" id="g-exp" data-en="Experiments" data-ko="실험">실험</h2>
+          <div class="list">
+            <!-- Visits without a panel ID run as public sessions, kept out of the export and
+                 the live randomization block. Real participants arrive through the panel link. -->
+            <a class="row" href="/resolve/">
+              <span class="row-main">
+                <span class="row-name">Meridian Resolve</span>
+                <span class="row-line" data-en="Review customer cases and make the final call" data-ko="고객 사례를 검토하고 최종 판단을 내리는 실험">고객 사례를 검토하고 최종 판단을 내리는 실험</span>
+                <span class="row-meta">
+                  <span class="status"><span class="dot on" aria-hidden="true"></span><span data-en="Running ·" data-ko="진행 중 ·">진행 중 ·</span></span>
+                  <span data-en="About 10 minutes · Phone, tablet, or desktop" data-ko="약 10분 · 휴대폰·태블릿·데스크톱">약 10분 · 휴대폰·태블릿·데스크톱</span>
+                </span>
+              </span>
+              <span class="row-status status"><span class="dot on" aria-hidden="true"></span><span data-en="Running" data-ko="진행 중">진행 중</span></span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+
+            <!-- Links to demo mode so visits are tagged demo and never enter the study data or
+                 fill a condition. Real participants arrive through the panel link instead. -->
+            <a class="row" href="/cartly/?mode=demo">
+              <span class="row-main">
+                <span class="row-name">Cartly</span>
+                <span class="row-line" data-en="Hand your shopping to a prototype AI assistant" data-ko="AI 쇼핑 어시스턴트에게 주문을 맡겨 보는 실험">AI 쇼핑 어시스턴트에게 주문을 맡겨 보는 실험</span>
+                <span class="row-meta">
+                  <span class="status"><span class="dot" aria-hidden="true"></span><span data-en="Preview ·" data-ko="미리 보기 ·">미리 보기 ·</span></span>
+                  <span data-en="About 7 minutes · Phone, tablet, or desktop" data-ko="약 7분 · 휴대폰·태블릿·데스크톱">약 7분 · 휴대폰·태블릿·데스크톱</span>
+                </span>
+              </span>
+              <span class="row-status status"><span class="dot" aria-hidden="true"></span><span data-en="Preview" data-ko="미리 보기">미리 보기</span></span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
         </section>
 
-        <section class="experiments" aria-label="Experiments">
-          <h2 class="group rise" style="animation-delay:0.26s" data-en="Experiments" data-ko="실험">Experiments</h2>
-
-          <a class="exp rise" style="animation-delay:0.3s" href="/resolve/">
-            <div class="exp-main">
-              <div class="exp-head">
-                <span class="exp-path">/resolve</span>
-                <span class="exp-tag active" data-en="Active study" data-ko="진행 중인 연구">Active study</span>
-              </div>
-              <h2 class="exp-name headline-face">Meridian Resolve</h2>
-              <p class="exp-desc" data-en="Step into a support console, review a set of sample customer cases, and make the final call on each." data-ko="고객 지원 콘솔에 들어가 샘플 고객 사례를 검토하고, 각 건의 최종 판단을 직접 내려 보세요.">Step into a support console, review a set of sample customer cases, and make the final call on each.</p>
-              <p class="exp-meta" data-en="About 10 minutes · Phone, tablet, or desktop" data-ko="약 10분 · 휴대폰·태블릿·데스크톱">About 10 minutes · Phone, tablet, or desktop</p>
-            </div>
-            <span class="exp-enter" aria-hidden="true">&#8594;</span>
-          </a>
-
-          <a class="exp rise" style="animation-delay:0.38s" href="/scope/">
-            <div class="exp-main">
-              <div class="exp-head">
-                <span class="exp-path">/scope</span>
-                <span class="exp-tag" data-en="Research tool" data-ko="연구 도구">Research tool</span>
-              </div>
-              <h2 class="exp-name headline-face">Scope</h2>
-              <p class="exp-desc" data-en="A curated, searchable library of research papers. Filter by method and lens, keep notes, and export to your reference manager." data-ko="엄선한 연구 논문을 검색할 수 있는 라이브러리입니다. 방법론과 관점별로 필터링하고, 메모를 남기고, 참고문헌 관리 도구로 내보낼 수 있습니다.">A curated, searchable library of research papers. Filter by method and lens, keep notes, and export to your reference manager.</p>
-              <p class="exp-meta" data-en="Search · BibTeX / RIS / CSV export" data-ko="검색 · BibTeX / RIS / CSV 내보내기">Search · BibTeX / RIS / CSV export</p>
-            </div>
-            <span class="exp-enter" aria-hidden="true">&#8594;</span>
-          </a>
-          <!-- Links to demo mode so visits are tagged demo and never enter the study data or
-               fill a condition. Real participants arrive through the panel link instead. -->
-          <a class="exp rise" style="animation-delay:0.46s" href="/cartly/?mode=demo">
-            <div class="exp-main">
-              <div class="exp-head">
-                <span class="exp-path">/cartly</span>
-                <span class="exp-tag" data-en="Preview" data-ko="미리 보기">Preview</span>
-              </div>
-              <h2 class="exp-name headline-face">Cartly</h2>
-              <p class="exp-desc" data-en="Try a prototype AI shopping assistant. Give it a task, see what it orders for you, and tell us how it went." data-ko="프로토타입 AI 쇼핑 어시스턴트를 직접 사용해 보세요. 할 일을 맡기고, 대신 주문한 결과를 확인한 뒤 어땠는지 알려 주세요.">Try a prototype AI shopping assistant. Give it a task, see what it orders for you, and tell us how it went.</p>
-              <p class="exp-meta" data-en="About 7 minutes · Phone, tablet, or desktop" data-ko="약 7분 · 휴대폰·태블릿·데스크톱">About 7 minutes · Phone, tablet, or desktop</p>
-            </div>
-            <span class="exp-enter" aria-hidden="true">&#8594;</span>
-          </a>
+        <section aria-labelledby="g-tools">
+          <h2 class="section-label" id="g-tools" data-en="Tools" data-ko="연구 도구">연구 도구</h2>
+          <div class="list">
+            <a class="row" href="/scope/">
+              <span class="row-main">
+                <span class="row-name">Scope</span>
+                <span class="row-line" data-en="A paper library you can filter by method and lens" data-ko="방법론과 관점으로 걸러 보는 논문 라이브러리">방법론과 관점으로 걸러 보는 논문 라이브러리</span>
+                <span class="row-meta" data-en="Search, notes · BibTeX, RIS, CSV export" data-ko="검색과 메모 · BibTeX, RIS, CSV 내보내기">검색과 메모 · BibTeX, RIS, CSV 내보내기</span>
+              </span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
         </section>
 
-        <!-- The hackathon work is its own track, not an experiment, so it gets its own index
-             at /hackathon/ and only a door from here. The projects are listed there, once. -->
-        <section class="experiments" aria-label="Hackathon">
-          <h2 class="group rise" style="animation-delay:0.54s" data-en="Elsewhere" data-ko="다른 작업">Elsewhere</h2>
-
-          <a class="exp rise" style="animation-delay:0.58s" href="/hackathon/">
-            <div class="exp-main">
-              <div class="exp-head">
-                <span class="exp-path">/hackathon</span>
-                <span class="exp-tag" data-en="Collection" data-ko="모음">Collection</span>
-              </div>
-              <h2 class="exp-name headline-face" data-en="Hackathon" data-ko="해커톤">Hackathon</h2>
-              <p class="exp-desc" data-en="Concepts built at hackathons, taken far enough that you can look at one and judge it for yourself." data-ko="해커톤에서 만든 기획들입니다. 직접 보고 판단할 수 있을 만큼 구체화했습니다.">Concepts built at hackathons, taken far enough that you can look at one and judge it for yourself.</p>
-            </div>
-            <span class="exp-enter" aria-hidden="true">&#8594;</span>
-          </a>
+        <!-- The hackathon work is its own track, not research, so it gets its own index at
+             /hackathon/ and only a door from here. The projects are listed there, once. -->
+        <section aria-labelledby="g-else">
+          <h2 class="section-label" id="g-else" data-en="Elsewhere" data-ko="그 밖의 작업">그 밖의 작업</h2>
+          <div class="list">
+            <a class="row" href="/hackathon/">
+              <span class="row-main">
+                <span class="row-name" data-en="Hackathon" data-ko="해커톤">해커톤</span>
+                <span class="row-line" data-en="Concepts and prototypes built at hackathons" data-ko="해커톤에서 짧은 호흡으로 만든 기획과 프로토타입">해커톤에서 짧은 호흡으로 만든 기획과 프로토타입</span>
+              </span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
         </section>
       </main>
 
       <footer class="footer">
-        <span class="wordmark" style="font-size:1rem">seunghwan<span class="labs">labs</span></span>
-        <span data-en="Seoul, South Korea" data-ko="대한민국 서울">Seoul, South Korea</span>
-        <a href="https://seunghwanlabs.com">seunghwanlabs.com &#8594;</a>
+        <span class="who" data-en="© 2026 Seung Hwan Jin · Seoul" data-ko="© 2026 진승환 · 서울">© 2026 진승환 · 서울</span>
+        <nav><a href="https://seunghwanlabs.com">seunghwanlabs.com</a></nav>
       </footer>
     </div>
 
